@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthdays — HPCL Jamshedpur LPG Bottling Plant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..800,100,1&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#e5edf5; --sheet:#fffaef; --box:#fffdf7;
+    --ink:#1f3b5c; --ink-soft:#6a8099; --dim:#a9bccd;
+    --blue:#7fb0da; --blue-deep:#3d78ab; --blue-pale:#ddeaf6;
+    --pink:#ef8fa4; --pink-deep:#d8637e; --pink-pale:#fbdde3;
+    --pist:#8fb884; --flame:#f5b53c; --cream:#f7e6c4; --rule:#e6eef6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    font-family:'Nunito Sans',system-ui,sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.45;
+    padding:26px 18px 70px;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px;margin:0 auto;}
+  .sheet{background:var(--sheet);border-radius:16px;overflow:hidden;
+         box-shadow:0 2px 3px rgba(31,59,92,.06),0 20px 50px -26px rgba(31,59,92,.4);}
+  .cap{display:block;width:100%;height:24px;}
+  .inner{padding:26px 40px 34px;}
+
+  /* ---------- masthead ---------- */
+  .mast{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;
+        padding-bottom:18px;border-bottom:2px solid var(--blue-pale);}
+  .plant{font-size:10.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-deep);}
+  .plant b{color:var(--pink-deep);}
+  h1{font-family:'Fraunces',Georgia,serif;
+     font-variation-settings:'SOFT' 100,'WONK' 1,'opsz' 144,'wght' 700;
+     font-size:clamp(38px,6.6vw,62px);line-height:.94;letter-spacing:-.02em;margin-top:5px;}
+  .btn{
+    font-family:'Nunito Sans',sans-serif;font-size:12px;font-weight:800;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--sheet);background:var(--blue-deep);
+    border:none;border-radius:999px;padding:11px 20px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:8px;transition:background .16s,transform .12s;
+  }
+  .btn:hover{background:#2f6293;}
+  .btn:active{transform:translateY(1px);}
+
+  /* ---------- today ---------- */
+  .today{
+    margin-top:22px;border-radius:14px;padding:26px 30px;position:relative;overflow:hidden;
+    background:var(--box);border:2px solid var(--blue-pale);
+  }
+  .today.party{background:linear-gradient(160deg,#fff3f6 0%,#fffaef 60%,#f2f8fd 100%);
+               border-color:var(--pink);}
+  .eyebrow{font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);}
+  .today.party .eyebrow{color:var(--pink-deep);}
+  .datestr{font-size:12.5px;color:var(--ink-soft);font-weight:600;margin-top:3px;}
+  .celeb{display:flex;align-items:center;gap:22px;margin-top:14px;flex-wrap:wrap;}
+  .celeb .cakeicon{flex-shrink:0;}
+  .bigname{font-family:'Fraunces',Georgia,serif;
+           font-variation-settings:'SOFT' 100,'WONK' 1,'wght' 700;
+           font-size:clamp(26px,4.4vw,40px);line-height:1.05;color:var(--pink-deep);}
+  .bigrole{font-size:13.5px;color:var(--ink-soft);font-weight:600;margin-top:4px;}
+  .quiet{display:flex;align-items:baseline;gap:14px;margin-top:10px;}
+  .quiet .dash{font-family:'Fraunces',Georgia,serif;font-size:34px;color:var(--dim);line-height:1;}
+  .quiet .sub{font-size:13px;color:var(--ink-soft);}
+
+  .nextrow{display:flex;gap:0;flex-wrap:wrap;margin-top:20px;padding-top:16px;
+           border-top:1.5px dashed var(--blue-pale);}
+  .nextrow .lbl{flex:0 0 100%;font-size:10px;font-weight:800;letter-spacing:.22em;
+                text-transform:uppercase;color:var(--dim);margin-bottom:11px;}
+  .up{flex:1 1 0;min-width:170px;padding-right:18px;display:flex;gap:11px;align-items:flex-start;}
+  .up .dd{font-family:'Fraunces',Georgia,serif;
+          font-variation-settings:'SOFT' 100,'WONK' 1,'wght' 700;
+          font-size:24px;line-height:1;color:var(--pink-deep);}
+  .up .dd span{display:block;font-family:'Nunito Sans',sans-serif;font-size:9px;font-weight:800;
+               letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-top:3px;}
+  .up .n{font-size:14px;font-weight:700;line-height:1.2;}
+  .up .r{font-size:11.5px;color:var(--ink-soft);}
+  .chip{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+        background:var(--blue-pale);color:var(--blue-deep);border-radius:999px;padding:2px 8px;margin-top:5px;}
+
+  /* confetti */
+  .confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+  .cf{position:absolute;top:-14px;width:7px;height:11px;border-radius:1px;opacity:.9;
+      animation:fall linear infinite;}
+  @keyframes fall{
+    0%{transform:translateY(-20px) rotate(0deg);opacity:0;}
+    12%{opacity:.95;}
+    100%{transform:translateY(320px) rotate(540deg);opacity:0;}
+  }
+
+  /* ---------- cake ---------- */
+  .cake-wrap{padding:26px 0 12px;border-bottom:2px solid var(--blue-pale);}
+  svg.cake{display:block;width:100%;height:auto;}
+  .candle{cursor:pointer;transition:opacity .16s;}
+  .candle.mute{opacity:.26;}
+  .mtick{font-family:'Nunito Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;fill:var(--dim);text-anchor:middle;}
+  .mtick.on{fill:var(--blue-deep);}
+  .mtick.now{fill:var(--pink-deep);}
+
+  /* ---------- month grid ---------- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px;align-items:start;}
+  .mbox{background:var(--box);border:1.5px solid var(--blue-pale);border-radius:9px;padding:13px 15px 11px;}
+  .mbox.void{background:transparent;border-style:dashed;border-color:var(--rule);}
+  .mbox.now{border-color:var(--pink);box-shadow:0 0 0 3px var(--pink-pale);}
+  .mhead{display:flex;align-items:center;justify-content:space-between;gap:8px;
+         padding-bottom:8px;border-bottom:1px solid var(--blue-pale);margin-bottom:3px;}
+  .mbox.void .mhead{border-bottom-color:var(--rule);}
+  .mname{font-family:'Fraunces',Georgia,serif;
+         font-variation-settings:'SOFT' 100,'WONK' 1,'wght' 600;
+         font-size:17px;letter-spacing:-.01em;line-height:1;}
+  .mbox.void .mname{font-variation-settings:'SOFT' 100,'WONK' 1,'wght' 400;color:var(--dim);}
+  .flames{display:flex;gap:2px;flex-shrink:0;}
+  .slot{display:flex;gap:11px;padding:8px 0 7px;align-items:flex-start;border-bottom:1px solid var(--rule);}
+  .slot:last-child{border-bottom:none;}
+  .dnum{font-family:'Fraunces',Georgia,serif;
+        font-variation-settings:'SOFT' 100,'WONK' 1,'wght' 700;
+        font-size:21px;line-height:1;color:var(--pink-deep);width:26px;flex-shrink:0;text-align:right;}
+  .who{flex:1;min-width:0;}
+  .p{padding:2px 6px;margin-left:-6px;border-radius:5px;transition:background .16s;}
+  .p.hot{background:var(--blue-pale);}
+  .p.isToday{background:var(--pink-pale);}
+  .nm{font-size:13.5px;font-weight:700;line-height:1.25;letter-spacing:-.005em;}
+  .rl{font-size:10.5px;color:var(--ink-soft);line-height:1.3;}
+  .tie{border-left:3px solid var(--pink);padding-left:9px;margin-left:-12px;border-radius:2px;}
+  .none{font-size:12px;color:var(--dim);padding:8px 0 5px;letter-spacing:.2em;}
+
+  .colophon{margin-top:26px;padding-top:14px;border-top:2px solid var(--blue-pale);
+            font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-weight:800;
+            display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+
+  @media(max-width:820px){ .inner{padding:22px 22px 28px;} .grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:520px){ .grid{grid-template-columns:1fr;} .today{padding:20px 18px;} }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+  :focus-visible{outline:2px solid var(--blue-deep);outline-offset:3px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="sheet">
+
+  <svg class="cap" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 0h100v2.4c-3 0-3 2.6-6.2 2.6S90.5 2.4 87.5 2.4s-3 2.6-6.3 2.6-3-2.6-6.2-2.6-3 2.6-6.3 2.6-3-2.6-6.2-2.6-3 2.6-6.3 2.6-3-2.6-6.2-2.6-3 2.6-6.3 2.6-3-2.6-6.2-2.6-3 2.6-6.3 2.6-3-2.6-6.2-2.6-3 2.6-6.3 2.6-3-2.6-6.2-2.6-3 2.6-6.3 2.6S3 2.4 0 2.4Z" fill="#7fb0da"/>
+  </svg>
+
+  <div class="inner">
+
+    <div class="mast">
+      <div>
+        <div class="plant">Hindustan Petroleum <b>&bull;</b> Jamshedpur LPG Bottling Plant</div>
+        <h1>Birthdays</h1>
+      </div>
+      <button class="btn" id="ics" type="button">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 1v9m0 0 3.4-3.4M8 10 4.6 6.6M1.6 11.4v2A1.4 1.4 0 0 0 3 14.8h10a1.4 1.4 0 0 0 1.4-1.4v-2"
+                stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Add to calendar
+      </button>
+    </div>
+
+    <div class="today" id="today"></div>
+
+    <div class="cake-wrap">
+      <svg class="cake" viewBox="0 0 880 268" id="cake" role="img"
+           aria-label="A sheet cake spanning January to December with a candle at each colleague's birthday"></svg>
+    </div>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="colophon">
+      <span>myHPCL Directory &mdash; Plant 10000526 / MSV 10000902</span>
+      <span>15 colleagues</span>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var MON  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var FULL = ['January','February','March','April','May','June','July','August',
+              'September','October','November','December'];
+
+  /* Only colleagues whose photo and date of birth both appear in the directory. */
+  var PEOPLE = [
+    {m:1,  d:16, n:'Dhanraj Prasad',       r:'Sr. LPG Operator'},
+    {m:4,  d:2,  n:'Khan Mirajuddin',      r:'Sr. LPG Operator'},
+    {m:4,  d:14, n:'Priyanshu Dixit',      r:'Plant Manager'},
+    {m:5,  d:11, n:'Sushma Verma',         r:'Operations Officer'},
+    {m:6,  d:8,  n:'Rajeshwar Prasad',     r:'Ch. Admin Assistant, Rajbhasa'},
+    {m:6,  d:29, n:'Vivek Kumar Pandey',   r:'Manager \u2013 Projects'},
+    {m:7,  d:2,  n:'Karunakar Majhi',      r:'Administrative Superintendent'},
+    {m:7,  d:7,  n:'Murmu Jagannath',      r:'Administrative Superintendent'},
+    {m:7,  d:27, n:'Suruchi Kumari',       r:'Junior Executive \u2013 Operations'},
+    {m:8,  d:7,  n:'Madhu Kant',           r:'Manager \u2013 Operations'},
+    {m:10, d:9,  n:'Anand Lohra',          r:'Administrative Assistant'},
+    {m:10, d:9,  n:'Rishabh Raj',          r:'Operations Officer'},
+    {m:11, d:28, n:'Monalisha Topno',      r:'Manager \u2013 Operations'},
+    {m:12, d:15, n:'Shashi Bhushan Kumar', r:'Officer \u2013 Projects'},
+    {m:12, d:25, n:'Dharm Deo Swansi',     r:'LPG Operator'}
+  ];
+  PEOPLE.forEach(function(p,i){ p.id = i; });
+
+  /* ---- today (?d=YYYY-MM-DD lets you preview any date) ---- */
+  var q = new URLSearchParams(location.search).get('d');
+  var NOW = q && /^\d{4}-\d{2}-\d{2}$/.test(q)
+          ? new Date(+q.slice(0,4), +q.slice(5,7)-1, +q.slice(8,10))
+          : new Date();
+  NOW.setHours(0,0,0,0);
+  var TM = NOW.getMonth()+1, TD = NOW.getDate();
+
+  function daysUntil(p){
+    var y = NOW.getFullYear();
+    var t = new Date(y, p.m-1, p.d); t.setHours(0,0,0,0);
+    if(t < NOW){ t = new Date(y+1, p.m-1, p.d); t.setHours(0,0,0,0); }
+    return Math.round((t - NOW)/86400000);
+  }
+
+  var todays   = PEOPLE.filter(function(p){ return p.m===TM && p.d===TD; });
+  var upcoming = PEOPLE.filter(function(p){ return !(p.m===TM && p.d===TD); })
+                       .sort(function(a,b){ return daysUntil(a)-daysUntil(b); })
+                       .slice(0,3);
+
+  /* ---- today panel ---- */
+  var CAKEICON =
+    '<svg class="cakeicon" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">'
+   +'<ellipse cx="37" cy="63" rx="30" ry="4" fill="#dde8f2"/>'
+   +'<rect x="11" y="42" width="52" height="19" rx="4" fill="#f7e6c4" stroke="#e6cf9f" stroke-width="1.5"/>'
+   +'<rect x="9" y="32" width="56" height="13" rx="5" fill="#7fb0da"/>'
+   +'<rect x="9" y="32" width="56" height="5" rx="2.5" fill="#a3c8e6"/>'
+   +'<path d="M20 45q0 6 3 6t3-6z" fill="#7fb0da"/><path d="M35 45q0 7 3 7t3-7z" fill="#7fb0da"/>'
+   +'<path d="M50 45q0 5 3 5t3-5z" fill="#7fb0da"/>'
+   +'<rect x="34.2" y="14" width="5.6" height="20" rx="2.6" fill="#fff7e4" stroke="#e6cf9f" stroke-width="1.2"/>'
+   +'<line x1="34.2" y1="23" x2="39.8" y2="19" stroke="#ef8fa4" stroke-width="2" stroke-linecap="round"/>'
+   +'<line x1="34.2" y1="30" x2="39.8" y2="26" stroke="#ef8fa4" stroke-width="2" stroke-linecap="round"/>'
+   +'<line x1="37" y1="14" x2="37" y2="10.5" stroke="#1f3b5c" stroke-width="1.5"/>'
+   +'<path d="M37 1c1.2 4-3.2 5-3.2 8.2A3.2 3.2 0 0 0 40.2 9.2c0-1.3-.8-2-.8-2 1.7 1.1 2.5 2.7 2.5 4.3a4.9 4.9 0 1 1-9.8 0C32.1 6 35.9 4.4 37 1z" fill="#f5b53c"/>'
+   +'</svg>';
+
+  var panel = document.getElementById('today');
+  var dateStr = NOW.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'});
+  var html = '';
+
+  if(todays.length){
+    panel.className = 'today party';
+    html += '<div class="confetti" id="cf"></div>';
+    html += '<div class="eyebrow">Today &mdash; ' + dateStr + '</div>';
+    html += '<div class="celeb">' + CAKEICON + '<div>';
+    todays.forEach(function(p){
+      html += '<div class="bigname">' + p.n + '</div><div class="bigrole">' + p.r + '</div>';
+    });
+    html += '</div></div>';
+  } else {
+    panel.className = 'today';
+    html += '<div class="eyebrow">Today</div>';
+    html += '<div class="datestr">' + dateStr + '</div>';
+    html += '<div class="quiet"><span class="dash">&mdash;</span>'
+          + '<span class="sub">No birthdays on the calendar</span></div>';
+  }
+
+  html += '<div class="nextrow"><div class="lbl">Next up</div>';
+  upcoming.forEach(function(p){
+    var n = daysUntil(p);
+    html += '<div class="up"><div class="dd">' + p.d + '<span>' + MON[p.m-1] + '</span></div>'
+          + '<div><div class="n">' + p.n + '</div><div class="r">' + p.r + '</div>'
+          + '<span class="chip">' + (n===1 ? 'tomorrow' : 'in ' + n + ' days') + '</span></div></div>';
+  });
+  html += '</div>';
+  panel.innerHTML = html;
+
+  if(todays.length && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var cf = document.getElementById('cf');
+    var COL = ['#ef8fa4','#7fb0da','#f5b53c','#8fb884','#fff7e4'];
+    for(var c=0;c<44;c++){
+      var s = document.createElement('span');
+      s.className = 'cf';
+      s.style.left = (c*2.3 + (c%5)) + '%';
+      s.style.background = COL[c%5];
+      s.style.animationDuration = (2.6 + (c%7)*.42) + 's';
+      s.style.animationDelay = (-(c%11)*.55) + 's';
+      cf.appendChild(s);
+    }
+  }
+
+  /* ---- cake ---- */
+  var Y = 2027, NS = 'http://www.w3.org/2000/svg', L = 62, R = 818, TOP = 118;
+  function doy(m,d){ return (Date.UTC(Y,m-1,d) - Date.UTC(Y,0,1)) / 86400000; }
+  var SPAN = (Date.UTC(Y+1,0,1) - Date.UTC(Y,0,1)) / 86400000;
+  function xOf(m,d){ return L + (doy(m,d)/SPAN) * (R-L); }
+  function el(t,a){ var e=document.createElementNS(NS,t); for(var k in a){e.setAttribute(k,a[k]);} return e; }
+
+  var svg = document.getElementById('cake');
+  svg.appendChild(el('ellipse',{cx:440,cy:232,rx:410,ry:11,fill:'#dde8f2'}));
+  svg.appendChild(el('rect',{x:30,y:224,width:820,height:9,rx:4.5,fill:'#c9dcec'}));
+  svg.appendChild(el('rect',{x:L-8,y:150,width:(R-L)+16,height:76,rx:7,fill:'#f7e6c4'}));
+  svg.appendChild(el('rect',{x:L-8,y:181,width:(R-L)+16,height:15,fill:'#fff7e4'}));
+  svg.appendChild(el('rect',{x:L-8,y:150,width:(R-L)+16,height:76,rx:7,fill:'none',stroke:'#e6cf9f','stroke-width':1.2}));
+  svg.appendChild(el('rect',{x:L-12,y:TOP,width:(R-L)+24,height:40,rx:9,fill:'#7fb0da'}));
+  svg.appendChild(el('rect',{x:L-12,y:TOP,width:(R-L)+24,height:11,rx:5.5,fill:'#a3c8e6'}));
+
+  [96,168,244,318,392,468,544,618,694,770].forEach(function(dx,i){
+    var h = 12 + ((i*7)%5)*5, w = 13 + ((i*5)%4)*3;
+    svg.appendChild(el('path',{fill:'#7fb0da', d:
+      'M'+(dx-w/2)+' '+(TOP+38)+' q0 '+h+' '+(w/2)+' '+h+' q'+(w/2)+' 0 '+(w/2)+' -'+h+' Z'}));
+  });
+
+  /* today marker on the cake board */
+  var tx = xOf(TM,TD);
+  svg.appendChild(el('line',{x1:tx,y1:112,x2:tx,y2:246,stroke:'#d8637e','stroke-width':1.6,
+                             'stroke-dasharray':'4 4','opacity':.65}));
+  svg.appendChild(el('circle',{cx:tx,cy:246,r:3.4,fill:'#d8637e'}));
+
+  for(var m=1; m<=12; m++){
+    var x0 = xOf(m,1);
+    svg.appendChild(el('line',{x1:x0,y1:238,x2:x0,y2:244,stroke:'#c9dcec','stroke-width':1.2}));
+    var mid = (xOf(m,1) + (m===12 ? R : xOf(m+1,1))) / 2;
+    var t = el('text',{x:mid,y:258,'class':'mtick'});
+    if(PEOPLE.some(function(p){return p.m===m;})) t.setAttribute('class','mtick on');
+    if(m===TM) t.setAttribute('class','mtick now');
+    t.textContent = MON[m-1].toUpperCase();
+    svg.appendChild(t);
+  }
+
+  var placed = PEOPLE.map(function(p){ return {p:p, x:xOf(p.m,p.d)}; })
+                     .sort(function(a,b){ return a.x-b.x; });
+  for(var i=1;i<placed.length;i++){
+    if(placed[i].x - placed[i-1].x < 13) placed[i].x = placed[i-1].x + 13;
+  }
+  var over = placed[placed.length-1].x - (R-6);
+  if(over > 0) placed.forEach(function(o){ o.x -= over; });
+
+  var WAX=['#fff7e4','#ef8fa4','#8fb884'], STRIPE=['#ef8fa4','#fff7e4','#fff7e4'], EDGE=['#e6cf9f','#d8637e','#6d9a62'];
+  var candles = {};
+
+  placed.forEach(function(o,i){
+    var cx=o.x, h=40+((i*3)%4)*4, topY=TOP+6-h, k=i%3;
+    var g = el('g',{'class':'candle',tabindex:'0','role':'button'});
+    g.appendChild(el('rect',{x:cx-3.4,y:topY,width:6.8,height:h,rx:3,fill:WAX[k],stroke:EDGE[k],'stroke-width':1}));
+    g.appendChild(el('line',{x1:cx-3.4,y1:topY+11,x2:cx+3.4,y2:topY+6,stroke:STRIPE[k],'stroke-width':1.8,'stroke-linecap':'round'}));
+    g.appendChild(el('line',{x1:cx-3.4,y1:topY+24,x2:cx+3.4,y2:topY+19,stroke:STRIPE[k],'stroke-width':1.8,'stroke-linecap':'round'}));
+    g.appendChild(el('line',{x1:cx,y1:topY,x2:cx,y2:topY-4,stroke:'#1f3b5c','stroke-width':1.4}));
+    g.appendChild(el('path',{fill:'#f5b53c', d:
+      'M'+cx+' '+(topY-16)+' C'+(cx+5.5)+' '+(topY-9)+' '+(cx+4.6)+' '+(topY-4)+' '+cx+' '+(topY-4)+
+      ' C'+(cx-4.6)+' '+(topY-4)+' '+(cx-5.5)+' '+(topY-9)+' '+cx+' '+(topY-16)+' Z'}));
+    g.appendChild(el('path',{fill:'#fdeec2', d:
+      'M'+cx+' '+(topY-11)+' C'+(cx+2.6)+' '+(topY-7.5)+' '+(cx+2.2)+' '+(topY-5.4)+' '+cx+' '+(topY-5.4)+
+      ' C'+(cx-2.2)+' '+(topY-5.4)+' '+(cx-2.6)+' '+(topY-7.5)+' '+cx+' '+(topY-11)+' Z'}));
+    var ttl = el('title',{});
+    ttl.textContent = o.p.n + ' \u2014 ' + o.p.d + ' ' + MON[o.p.m-1] + ' \u00b7 in ' + daysUntil(o.p) + ' days';
+    g.appendChild(ttl);
+    svg.appendChild(g);
+    candles[o.p.id] = g;
+    g.addEventListener('mouseenter', function(){ hi(o.p.id); });
+    g.addEventListener('mouseleave', lo);
+    g.addEventListener('focus',      function(){ hi(o.p.id); });
+    g.addEventListener('blur',       lo);
+  });
+
+  /* ---- month grid ---- */
+  var MINI = '<svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true">'
+           + '<path d="M4 0C4.9 2.2 2.6 2.9 2.6 5a1.4 1.4 0 0 0 2.8 0c0-.8-.5-1.2-.5-1.2 1.1.7 1.6 1.7 1.6 2.7a2.5 2.5 0 1 1-5 0C1.5 3.6 3.6 2.6 4 0z" fill="#f5b53c"/></svg>';
+
+  var grid = document.getElementById('grid');
+  for(var mi=1; mi<=12; mi++){
+    var list = PEOPLE.filter(function(p){ return p.m===mi; }).sort(function(a,b){ return a.d-b.d; });
+    var box = document.createElement('div');
+    box.className = 'mbox' + (list.length ? '' : ' void') + (mi===TM ? ' now' : '');
+
+    var head = document.createElement('div');
+    head.className = 'mhead';
+    head.innerHTML = '<span class="mname">' + FULL[mi-1] + '</span>'
+                   + '<span class="flames">' + MINI.repeat(list.length) + '</span>';
+    box.appendChild(head);
+
+    if(!list.length){
+      var none = document.createElement('div');
+      none.className = 'none'; none.textContent = '\u2014';
+      box.appendChild(none);
+    } else {
+      var days = [];
+      list.forEach(function(p){
+        var s = days.filter(function(x){ return x.d===p.d; })[0];
+        if(!s){ s = {d:p.d, who:[]}; days.push(s); }
+        s.who.push(p);
+      });
+      days.forEach(function(s){
+        var slot = document.createElement('div'); slot.className = 'slot';
+        var dn = document.createElement('div'); dn.className = 'dnum'; dn.textContent = s.d;
+        var who = document.createElement('div');
+        who.className = 'who' + (s.who.length > 1 ? ' tie' : '');
+        s.who.forEach(function(p){
+          var b = document.createElement('div');
+          b.className = 'p' + (p.m===TM && p.d===TD ? ' isToday' : '');
+          b.dataset.id = p.id;
+          b.innerHTML = '<div class="nm">' + p.n + '</div><div class="rl">' + p.r + '</div>';
+          b.addEventListener('mouseenter', function(){ hi(p.id); });
+          b.addEventListener('mouseleave', lo);
+          who.appendChild(b);
+        });
+        slot.appendChild(dn); slot.appendChild(who);
+        box.appendChild(slot);
+      });
+    }
+    grid.appendChild(box);
+  }
+
+  var allC = Array.prototype.slice.call(svg.querySelectorAll('.candle'));
+  var allP = Array.prototype.slice.call(grid.querySelectorAll('.p'));
+  function hi(id){
+    allC.forEach(function(c){ c.classList.add('mute'); });
+    if(candles[id]) candles[id].classList.remove('mute');
+    allP.forEach(function(r){ r.classList.toggle('hot', +r.dataset.id === id); });
+  }
+  function lo(){
+    allC.forEach(function(c){ c.classList.remove('mute'); });
+    allP.forEach(function(r){ r.classList.remove('hot'); });
+  }
+
+  /* ---- calendar export: yearly repeating, reminder the day before ---- */
+  document.getElementById('ics').addEventListener('click', function(){
+    var pad = function(v){ return String(v).padStart(2,'0'); };
+    var yr  = NOW.getFullYear();
+    var out = ['BEGIN:VCALENDAR','VERSION:2.0','CALSCALE:GREGORIAN','METHOD:PUBLISH',
+               'PRODID:-//HPCL Jamshedpur LPG Bottling Plant//Birthdays//EN',
+               'X-WR-CALNAME:Jamshedpur LPG Plant Birthdays'];
+    PEOPLE.forEach(function(p){
+      var start = yr + pad(p.m) + pad(p.d);
+      var end   = new Date(yr, p.m-1, p.d+1);
+      out.push('BEGIN:VEVENT',
+        'UID:hpcl-jsr-bday-' + p.id + '@jamshedpur.lpg',
+        'DTSTAMP:' + yr + pad(NOW.getMonth()+1) + pad(NOW.getDate()) + 'T000000Z',
+        'DTSTART;VALUE=DATE:' + start,
+        'DTEND;VALUE=DATE:' + end.getFullYear() + pad(end.getMonth()+1) + pad(end.getDate()),
+        'RRULE:FREQ=YEARLY',
+        'SUMMARY:Birthday \u2014 ' + p.n,
+        'DESCRIPTION:' + p.r + '\\, Jamshedpur LPG Bottling Plant',
+        'TRANSP:TRANSPARENT',
+        'BEGIN:VALARM','TRIGGER:-P1D','ACTION:DISPLAY',
+        'DESCRIPTION:Birthday tomorrow \u2014 ' + p.n,'END:VALARM',
+        'END:VEVENT');
+    });
+    out.push('END:VCALENDAR');
+
+    var blob = new Blob([out.join('\r\n')], {type:'text/calendar;charset=utf-8'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'jamshedpur-lpg-plant-birthdays.ics';
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1500);
+  });
+})();
+</script>
+</body>
+</html>
